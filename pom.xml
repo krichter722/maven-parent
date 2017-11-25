@@ -3,15 +3,43 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>richtercloud</groupId>
     <artifactId>maven-parent</artifactId>
-    <version>1</version>
+    <version>2</version>
     <packaging>pom</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
-    <reporting>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>apache-snaphosts</id>
+            <url>https://repository.apache.org/content/repositories/snapshots</url>
+        </pluginRepository>
+            <!-- provides maven-checkstyle-plugin:3.0.0-SNAPSHOT -->
+    </pluginRepositories>
+    <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.0.0-SNAPSHOT</version>
+                    <!-- 2.17 has trouble with lambda expressions -->
+                <executions>
+                    <execution>
+                        <id>check_style</id>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <phase>validate</phase>
+                        <configuration>
+                            <configLocation>checkstyle-config/check_style.xml</configLocation>
+                        </configuration>
+                    </execution>
+                </executions>
+                <configuration>
+                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -32,6 +60,10 @@
                                 the origin/cause for the exception -->
                 </configuration>
             </plugin>
+        </plugins>
+    </build>
+    <reporting>
+        <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>findbugs-maven-plugin</artifactId>
