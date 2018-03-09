@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>richtercloud</groupId>
     <artifactId>maven-parent</artifactId>
-    <version>2</version>
+    <version>3</version>
     <packaging>pom</packaging>
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -53,6 +53,26 @@
                     <trimStackTrace>false</trimStackTrace>
                         <!-- only leads to nonsense stacktraces which don't show
                                 the origin/cause for the exception -->
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>3.9.0</version>
+                <executions>
+                    <execution>
+                        <id>pmd-check</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <printFailingErrors>true</printFailingErrors>
+                    <rulesets>
+                        <ruleset>code-analysis/ruleset.xml</ruleset>
+                    </rulesets>
                 </configuration>
             </plugin>
         </plugins>
