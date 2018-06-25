@@ -122,6 +122,7 @@
                         <ruleset>code-analysis/ruleset.xml</ruleset>
                     </rulesets>
                     <analysisCache>true</analysisCache>
+                    <includeTests>true</includeTests>
                 </configuration>
             </plugin>
         </plugins>
