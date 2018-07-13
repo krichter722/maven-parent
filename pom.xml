@@ -106,7 +106,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
-                <version>3.9.0</version>
+                <version>3.10.0</version>
                 <executions>
                     <execution>
                         <id>pmd-check</id>
@@ -121,7 +121,7 @@
                     <rulesets>
                         <ruleset>code-analysis/ruleset.xml</ruleset>
                     </rulesets>
-                    <analysisCache>true</analysisCache>
+                    <analysisCache>false</analysisCache>
                     <includeTests>true</includeTests>
                 </configuration>
             </plugin>
