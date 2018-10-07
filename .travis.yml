@@ -11,4 +11,4 @@ jdk:
 install: /bin/true
 
 script:
-- env MAVEN_OPTS="-Xmx6g -Xms2g" mvn install --update-snapshots -DskipTests=true -Dmaven.javadoc.skip=true --batch-mode --show-version && mvn test verify --batch-mode
+- mvn --update-snapshots --batch-mode --show-version install
