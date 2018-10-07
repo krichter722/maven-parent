@@ -3,10 +3,10 @@ language: java
 # specifying other dists doesn't make sense because `trusty` doesn't have `oraclejdk8` (fails due to `Sorry, but JDK '[oraclejdk8]' is not known.`) which is the only supported JDK currently. Testing on Mac OSX doesn't make too much sense since it will run the same `maven` based build routine.
 
 jdk:
-- openjdk7
 - openjdk8
 - oraclejdk8
     # `oraclejdk9` fails due to `Cannot set property 'cacheFile' to '/home/travis/build/krichter722/maven-parent/target/checkstyle-cachefile' in module Checker: InvocationTargetException: javax/xml/bind/DatatypeConverter: javax.xml.bind.DatatypeConverter`
+    # `openjdk7` fails due to `Execution check_style of goal org.apache.maven.plugins:maven-checkstyle-plugin:3.0.0:check failed: An API incompatibility was encountered while executing org.apache.maven.plugins:maven-checkstyle-plugin:3.0.0:check: java.lang.UnsupportedClassVersionError: com/puppycrawl/tools/checkstyle/api/AuditListener : Unsupported major.minor version 52.0`
 
 install: /bin/true
 
