@@ -1,4 +1,4 @@
-language: java
+language: sh
 
 # specifying other dists doesn't make sense because `trusty` doesn't have `oraclejdk8` (fails due to `Sorry, but JDK '[oraclejdk8]' is not known.`) which is the only supported JDK currently. Testing on Mac OSX doesn't make too much sense since it will run the same `maven` based build routine.
 
@@ -13,12 +13,9 @@ env:
     - secure: "QQuuB501siywsWZ4oU7gpsQDLm0a9U67De9sV1W2NE4WaDfyoyVCSVciSvi6t5TwvhAOjz4ah+giXdlH3mPQ3SsJnY1IDB6JBTHwapi7xO4LHsPe+1mthFkLHSAroLwkH/FlVAs7qhOaPiz+Ne5mLCERkyMm/1ipWhnGxSieJ/r0Dt2yMbkB8GpKG14RO7qnUNZ0BtDUwHNHEH10dTssAhDYznK3aDDX6rishQiQCUDTlgzACxRMbXnP7ELsvpmdTxHG1FuyLXD7FAiut75szMPPLPn67RTnfBuBWhC+KXXKxBfJ2KMNB425RUQwZGuruLjC5bm3GxQ+sNf7AXa4I8otXT3JF2sHs8wIm0gmBB+epIQB0/uUEbWuV6DYACAE/z16sJOcYnUnfXtel+gZ4Mrhy+DhPw5VEqeMm11cuU0GhEhX+FNXEqeLwfT+qPXDWWJTmdbaWpejoTazBmleKSBbT+0Abc/ZSfdISsne5F72RSXF6BKCGiFPTIrnZQJ9F2IbJF1YsZjXNauEvbfZVWCBCbcfAjuWtM0MqwjmtQaw7PfkcMJ8+fh03IXQ1dUyyq71HqO1kQsxF5Us2WQNnvZAGgTtTi9+e+8yzvQciKj+nONu1AWhj63qfk26CJNzAOVZrOj0xOSphg7j0LL6lnJsFZu91kXNKyq1B0JJYsA="
     - # ^^ GPG_PASSPHRASE
 
-install: /bin/true
+services:
+- docker
 
 script:
-- mvn --update-snapshots --batch-mode --show-version install
-    # the ossrh profile will be tested through deployment (setup of separate parameters for files in cd submodule is unnecessary work)
-
-after_success:
-- ./cd/before-deploy.sh
-- ./cd/deploy.sh
+- sudo --set-home cd/before-deploy.sh
+- docker run -v $TRAVIS_BUILD_DIR:$TRAVIS_BUILD_DIR:rw -v /root:/root:rw -e TRAVIS_BRANCH -e TRAVIS_PULL_REQUEST -e OSSRH_JIRA_USERNAME -e OSSRH_JIRA_PASSWORD -e GPG_KEY_NAME -e GPG_PASSPHRASE maven /bin/sh -c "ls -la && cd $TRAVIS_BUILD_DIR && ls -la && mvn --update-snapshots --batch-mode --show-version install && ./cd/deploy.sh"

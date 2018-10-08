@@ -237,6 +237,13 @@
                                 </goals>
                             </execution>
                         </executions>
+                        <configuration>
+                            <gpgArguments>
+                                <arg>--pinentry-mode</arg>
+                                <arg>loopback</arg>
+                            </gpgArguments>
+                            <!-- avoids `gpg: signing failed: Inappropriate ioctl for device` -->
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>
